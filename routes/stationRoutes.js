@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Station = require('../models/Station');
+const Station = require('../models/StationModel');
 
 // Créer une station
 router.post('/stations', async (req, res) => {

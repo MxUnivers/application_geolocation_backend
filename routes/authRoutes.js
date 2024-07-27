@@ -3,12 +3,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
-
-
+const authenticateToken = require('../middlewares/auth');
 
 
 // Connexion utilisateur
-router.post('/login', async (req, res) => {
+router.post('/login',authenticateToken, async (req, res) => {
     const { email, phone, password } = req.body;
     try {
         const user = await User.findOne({

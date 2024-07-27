@@ -51,7 +51,7 @@ const tripSchema = new Schema({
         default: Date.now
     }
 },{
-    timestamps
+    timestamps:true
 });
 
 const Trip = mongoose.model('Trip', tripSchema);

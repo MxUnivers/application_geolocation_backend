@@ -3,7 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/UserModel');
 const sendEmail = require('../utils/sendEmail');
-const { ApplicationName } = require('../utils/dataApi');
+
+const ApplicationInfo = require('../utils/dataApi'); 
+const authenticateToken = require('../middlewares/auth');
 
 
 function generateRandomPasswordE(length) {
@@ -19,7 +21,7 @@ function generateRandomPasswordE(length) {
 
 
 // Créer un utilisateur
-router.post('/register', async (req, res) => {
+router.post('/register',authenticateToken, async (req, res) => {
     try {
         const { phone, email } = req.body;
         const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
@@ -37,11 +39,11 @@ router.post('/register', async (req, res) => {
             "aymarbly559@gmail.com",
             "a g c t x y x c o x s k v a g k",
             `${newUser.email}`,
-            `${ApplicationName}`,
+            `${ApplicationInfo.name}`,
             `Votre mot de passe : ${passwordRandom}`
         );
 
-        return res.status(201).json({ data: newUser, message: "Inscription réussie avec succès" });
+        return res.status(200).json({ data: newUser, message: "Inscription réussie avec succès" });
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
@@ -51,7 +53,7 @@ router.post('/register', async (req, res) => {
 
 
 // Modifier un utilisateur
-router.patch('/edit/:id', async (req, res) => {
+router.patch('/edit/:id',authenticateToken, async (req, res) => {
     try {
         const { phone, email } = req.body;
         const idUser = req.params.id;
@@ -90,7 +92,7 @@ router.patch('/edit/:id', async (req, res) => {
 
 
 // Bloquer/Débloquer un utilisateur
-router.patch('/block/:id/block', async (req, res) => {
+router.patch('/block/:id/block',authenticateToken, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.params.id, { isBlocked: req.body.isBlocked }, { new: true, runValidators: true });
         if (!user) {
@@ -107,7 +109,7 @@ router.patch('/block/:id/block', async (req, res) => {
 
 
 // Lister tous les utilisateurs
-router.get('/get_users', async (req, res) => {
+router.get('/get_users',authenticateToken, async (req, res) => {
     try {
         const users = await User.find();
         return res.status(200).json({data:users});
@@ -118,7 +120,7 @@ router.get('/get_users', async (req, res) => {
 
 
 // Obtenir un utilisateur par ID
-router.get('/get_user/:id', async (req, res) => {
+router.get('/get_user/:id',authenticateToken, async (req, res) => {
     try {
         const user = await User.findById({ _id: req.params.id });
         if (!user) {
