@@ -7,19 +7,19 @@ router.post('/stations', async (req, res) => {
     try {
         const newStation = new Station(req.body);
         await newStation.save();
-        res.status(201).json(newStation);
+        return res.status(201).json(newStation);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 });
 
 // Obtenir toutes les stations
-router.get('/stations', async (req, res) => {
+router.get('/get_stations', async (req, res) => {
     try {
         const stations = await Station.find();
-        res.status(200).json(stations);
+        return res.status(200).json(stations);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 });
 
@@ -30,9 +30,9 @@ router.get('/stations/:id', async (req, res) => {
         if (!station) {
             return res.status(404).json();
         }
-        res.status(200).json(station);
+        return res.status(200).json(station);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 });
 
@@ -43,9 +43,9 @@ router.patch('/stations/:id', async (req, res) => {
         if (!station) {
             return res.status(404).json();
         }
-        res.status(200).json(station);
+        return res.status(200).json(station);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 });
 
@@ -56,9 +56,9 @@ router.delete('/stations/:id', async (req, res) => {
         if (!station) {
             return res.status(404).json();
         }
-        res.status(200).json(station);
+        return res.status(200).json(station);
     } catch (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 });
 
@@ -71,9 +71,9 @@ router.patch('/stations/:id/active', async (req, res) => {
         if (!station) {
             return res.status(404).json();
         }
-        res.status(200).json(station);
+        return res.status(200).json(station);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 });
 

@@ -7,13 +7,15 @@ const authenticateToken = require('../middlewares/auth');
 
 
 // Connexion utilisateur
-router.post('/login',authenticateToken, async (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, phone, password } = req.body;
     try {
         const user = await User.findOne({
             $or: [{ email: email }, { phone: phone }]
         });
-        if (!user || user.password !== password) {
+
+        if (!user) {
+            console.log({ email, phone, password });
             return res.status(410).json({ message: 'Utilisateur non trouvé ou mot de passe incorrect' });
         }
         if (user.isBlocked) {
