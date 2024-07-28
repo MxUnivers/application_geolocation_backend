@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 // Schéma de l'utilisateur
@@ -37,9 +38,46 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
+
+// Méthode statique pour initialiser les utilisateurs
+userSchema.statics.initializeUsers = async function() {
+    const usersCount = await this.countDocuments();
+    if (usersCount === 0) {
+        const saltRounds = 10;
+
+        const users = [
+            {
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john.doe@example.com',
+                phone: '0102030405',
+                password: await bcrypt.hash('123456', saltRounds)
+            },
+            {
+                firstName: 'Jane',
+                lastName: 'Smith',
+                email: 'jane.smith@example.com',
+                phone: '0607080910',
+                password: await bcrypt.hash('123456', saltRounds)
+            },
+            {
+                firstName: 'Alice',
+                lastName: 'Johnson',
+                email: 'alice.johnson@example.com',
+                phone: '0506070809',
+                password: await bcrypt.hash('123456', saltRounds)
+            }
+        ];
+
+        await this.insertMany(users);
+        console.log('Utilisateurs initialisés avec succès.');
+    } else {
+        console.log('Les utilisateurs existent déjà.');
+    }
+};
 
 const User = mongoose.model('User', userSchema);
 

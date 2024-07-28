@@ -120,13 +120,13 @@ router.get('/get_users',authenticateToken, async (req, res) => {
 
 
 // Obtenir un utilisateur par ID
-router.get('/get_user/:id',authenticateToken, async (req, res) => {
+router.get('/get_user/:id', async (req, res) => {
     try {
         const user = await User.findById({ _id: req.params.id });
         if (!user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+            return res.status(400).json({ message: 'Utilisateur non trouvé' });
         }
-        return res.status(200).json({data:user});
+        return res.status(200).json({data:user,message:"utilisateur récupérer avec succès "});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
