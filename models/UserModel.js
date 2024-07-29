@@ -25,7 +25,8 @@ const userSchema = new Schema({
     },
     address: {
         type: String,
-        required:false
+        required:false,
+        default:"Abidjan"
     },
     password: {
         type: String,
@@ -63,7 +64,7 @@ userSchema.statics.initializeUsers = async function() {
             {
                 firstName: 'John',
                 lastName: 'Doe',
-                email: 'john.doe@example.com',
+                email: 'aymarbly559@gmail.com',
                 phone: '0102030405',
                 password: await bcrypt.hash('1234', saltRounds)
             },
