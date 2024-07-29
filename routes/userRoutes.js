@@ -139,17 +139,48 @@ router.post('/send-code-reset', async (req, res) => {
         }
         const codeRandom = generateRandomPasswordE(4);
 
-        userExist.passwordverfield = codeRandom;
+        userExist.passwordverifield = codeRandom;
 
         sendEmail(
             "aymarbly559@gmail.com",
             "a g c t x y x c o x s k v a g k",
             `${userExist.email}`,
-            `${ApplicationInfo.name} Mise a jour de mot de passe`,
+            `${ApplicationInfo.name} a envoyer un code vérification`,
             `Votre code vérification est le ${codeRandom} `
         );
 
         await userExist.save();
+        
+        return res.status(200).json({ data: userExist, message: "Mise a jour de votre mot de passe effectuer avec succès" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(400).json({ message: error.message });
+    }
+});
+
+
+
+
+
+
+router.post('/verify-code', async (req, res) => {
+    try {
+        const { phone, email,passwordverifield } = req.body;
+        const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
+        if (!userExist) {
+            return res.status(410).json({ message: `Cet utilisateur n'esiste pas avec cet compte` });
+        }
+        if(!userExist && userExist.passwordverifield && userExist.passwordverifield == passwordverifield){
+            return res.status(411).json({message: "Ce code n'existe pas dans notre lase base données" });
+        }
+
+        sendEmail(
+            "aymarbly559@gmail.com",
+            "a g c t x y x c o x s k v a g k",
+            `${userExist.email}`,
+            `${ApplicationInfo.name} à accepter votre code vérification`,
+            `Votre code vérification à été verfier par <strong>${ApplicationInfo.name}</strong> `
+        );
         
         return res.status(200).json({ data: userExist, message: "Mise a jour de votre mot de passe effectuer avec succès" });
     } catch (error) {

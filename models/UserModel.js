@@ -31,7 +31,7 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    passwordverfield:{
+    passwordverifield:{
         type:String,
         required:false
     },
