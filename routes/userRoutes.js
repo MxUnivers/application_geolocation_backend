@@ -168,7 +168,7 @@ router.post('/verify-code', async (req, res) => {
         const { phone, email,passwordverifield } = req.body;
         const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
         if (!userExist) {
-            return res.status(410).json({ message: `Cet utilisateur n'esiste pas avec cet compte` });
+            return res.status(410).json({ message: `Cet utilisateur n'existe pas avec cet compte` });
         }
         if(!userExist && userExist.passwordverifield && userExist.passwordverifield == passwordverifield){
             return res.status(411).json({message: "Ce code n'existe pas dans notre lase base données" });
