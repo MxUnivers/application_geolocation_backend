@@ -17,6 +17,11 @@ const userSchema = new Schema({
         unique: true,
         sparse: true // Permet d'accepter des valeurs nulles
     },
+    profilePicture: {
+        type: String,
+        required: false,
+        default:""
+    },
     phone: {
         type: String,
         unique: false,
@@ -66,21 +71,24 @@ userSchema.statics.initializeUsers = async function() {
                 lastName: 'Doe',
                 email: 'aymarbly559@gmail.com',
                 phone: '0102030405',
-                password: await bcrypt.hash('1234', saltRounds)
+                password: await bcrypt.hash('1234', saltRounds),
+                address:"Abidjan"
             },
             {
                 firstName: 'Jane',
                 lastName: 'Smith',
                 email: 'jane.smith@example.com',
                 phone: '0607080910',
-                password: await bcrypt.hash('1234', saltRounds)
+                password: await bcrypt.hash('1234', saltRounds),
+                address:"Abidjan"
             },
             {
                 firstName: 'Alice',
                 lastName: 'Johnson',
                 email: 'alice.johnson@example.com',
                 phone: '0506070809',
-                password: await bcrypt.hash('1234', saltRounds)
+                password: await bcrypt.hash('1234', saltRounds),
+                address:"Abidjan"
             }
         ];
 
