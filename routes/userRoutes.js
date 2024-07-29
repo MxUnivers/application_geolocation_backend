@@ -21,7 +21,7 @@ function generateRandomPasswordE(length) {
 
 
 // Créer un utilisateur
-router.post('/register',authenticateToken, async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
         const { phone, email } = req.body;
         const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
@@ -45,6 +45,7 @@ router.post('/register',authenticateToken, async (req, res) => {
 
         return res.status(200).json({ data: newUser, message: "Inscription réussie avec succès" });
     } catch (error) {
+        console.log(error.message);
         return res.status(400).json({ message: error.message });
     }
 });
@@ -52,8 +53,10 @@ router.post('/register',authenticateToken, async (req, res) => {
 
 
 
+
+
 // Modifier un utilisateur
-router.patch('/edit/:id',authenticateToken, async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
     try {
         const { phone, email } = req.body;
         const idUser = req.params.id;
@@ -83,6 +86,74 @@ router.patch('/edit/:id',authenticateToken, async (req, res) => {
 
 
     } catch (error) {
+        console.log(error.message);
+        return res.status(400).json({ message: error.message });
+    }
+});
+
+
+
+
+// Reset password
+// Créer un utilisateur
+router.post('/reset-password/:id', async (req, res) => {
+    try {
+        const { password } = req.body;
+        const idUser = req.params.id;
+        const userExist = await User.findById({ _id:idUser});
+        if (!userExist) {
+            return res.status(410).json({ message: `Cet utilisateur n'esiste pas` });
+        }
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        userExist.password = hashedPassword;
+
+        /*sendEmail(
+            "aymarbly559@gmail.com",
+            "a g c t x y x c o x s k v a g k",
+            `${newUser.email}`,
+            `${ApplicationInfo.name} Mise a jour de mot de passe`,
+            `Votre mot viens d'etre mis à jour `
+        );*/
+
+        await userExist.save();
+        
+        return res.status(200).json({ data: userExist, message: "Mise a jour de votre mot de passe effectuer avec succès" });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(400).json({ message: error.message });
+    }
+});
+
+
+
+
+
+router.post('/send-code-reset', async (req, res) => {
+    try {
+        const { phone, email } = req.body;
+        const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
+        if (!userExist) {
+            return res.status(410).json({ message: `Cet utilisateur n'esiste pas avec cet compte` });
+        }
+        const codeRandom = generateRandomPasswordE(4);
+
+        userExist.passwordverfield = codeRandom;
+
+        sendEmail(
+            "aymarbly559@gmail.com",
+            "a g c t x y x c o x s k v a g k",
+            `${userExist.email}`,
+            `${ApplicationInfo.name} Mise a jour de mot de passe`,
+            `Votre code vérification est le ${codeRandom} `
+        );
+
+        await userExist.save();
+        
+        return res.status(200).json({ data: userExist, message: "Mise a jour de votre mot de passe effectuer avec succès" });
+    } catch (error) {
+        console.log(error.message);
         return res.status(400).json({ message: error.message });
     }
 });

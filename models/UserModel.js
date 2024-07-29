@@ -23,9 +23,17 @@ const userSchema = new Schema({
         sparse: true, // Permet d'accepter des valeurs nulles
         required:true
     },
+    address: {
+        type: String,
+        required:false
+    },
     password: {
         type: String,
         required: false
+    },
+    passwordverfield:{
+        type:String,
+        required:false
     },
     balance: {
         type: Number,
@@ -35,6 +43,8 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+
+
     createdAt: {
         type: Date,
         default: Date.now

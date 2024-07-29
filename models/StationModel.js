@@ -11,6 +11,9 @@ const stationSchema = new Schema({
         type: String,
         required: true
     },
+    endpoint:{
+        type:String
+    },
     longitude: {
         type: Number,
         required: true
@@ -45,6 +48,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Cocody',
                 address: 'Adresse Cocody',
+                endpoint: 'Cocody',
                 longitude: -3.983557,
                 latitude: 5.354251,
                 equipment: 'Equipement Cocody'
@@ -52,6 +56,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Yopougon',
                 address: 'Adresse Yopougon',
+                endpoint: 'Yopougon',
                 longitude: -4.070051,
                 latitude: 5.338054,
                 equipment: 'Equipement Yopougon'
@@ -59,6 +64,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Abobo',
                 address: 'Adresse Abobo',
+                endpoint: 'Abobo',
                 longitude: -4.021650,
                 latitude: 5.423147,
                 equipment: 'Equipement Abobo'
@@ -66,6 +72,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Marcory',
                 address: 'Adresse Marcory',
+                endpoint: 'Marcory',
                 longitude: -3.966540,
                 latitude: 5.303651,
                 equipment: 'Equipement Marcory'
@@ -73,6 +80,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Treichville',
                 address: 'Adresse Treichville',
+                endpoint: 'Treichville',
                 longitude: -4.005363,
                 latitude: 5.301590,
                 equipment: 'Equipement Treichville'
@@ -80,6 +88,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Plateau',
                 address: 'Adresse Plateau',
+                endpoint: 'Plateau',
                 longitude: -4.031696,
                 latitude: 5.324864,
                 equipment: 'Equipement Plateau'
@@ -87,6 +96,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Koumassi',
                 address: 'Adresse Koumassi',
+                endpoint: 'Koumassi',
                 longitude: -3.966958,
                 latitude: 5.291924,
                 equipment: 'Equipement Koumassi'
@@ -94,6 +104,7 @@ stationSchema.statics.initializeStations = async function() {
             {
                 name: 'Station Adjamé',
                 address: 'Adresse Adjamé',
+                endpoint: 'Adjamé',
                 longitude: -4.031080,
                 latitude: 5.369081,
                 equipment: 'Equipement Adjamé'
