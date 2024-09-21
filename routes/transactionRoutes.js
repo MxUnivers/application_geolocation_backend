@@ -36,7 +36,7 @@ router.get('/get_transactions', async (req, res) => {
         if (stationId) filter.station = stationId;
 
         const transactions = await Transaction.find(filter);
-        return res.status(200).json({ data: transactions, message: "Transactions retrieved successfully" });
+        return res.status(200).json({ data: transactions.reverse(), message: "Transactions retrieved successfully" });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -52,7 +52,7 @@ router.get('/get_transactions/user', async (req, res) => {
         // if (stationId) filter.station = stationId;
 
         const transactions = await Transaction.find(filter)
-        return res.status(200).json({ data: transactions, message: "Transactions retrieved successfully" });
+        return res.status(200).json({ data: transactions.reverse(), message: "Transactions retrieved successfully" });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
