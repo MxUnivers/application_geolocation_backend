@@ -23,8 +23,8 @@ function generateRandomPasswordE(length) {
 // Créer un utilisateur
 router.post('/register', async (req, res) => {
     try {
-        const { phone, email } = req.body;
-        const userExist = await User.findOne({ $or: [{ phone: phone }, { email: email }] });
+        const { phone} = req.body;
+        const userExist = await User.findOne({ $or: [{ phone: phone }] });
         if (userExist) {
             return res.status(410).json({ message: `Cet utilisateur existe déjà avec ${phone} ou ${email}` });
         }

@@ -12,6 +12,7 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
+    codePostal :{type:String},
     // email: {
     //     type: String,
     //     unique: true,
@@ -59,45 +60,45 @@ const userSchema = new Schema({
     timestamps: true
 });
 
-// Méthode statique pour initialiser les utilisateurs
-userSchema.statics.initializeUsers = async function() {
-    const usersCount = await this.countDocuments();
-    if (usersCount === 0) {
-        const saltRounds = 10;
+// // Méthode statique pour initialiser les utilisateurs
+// userSchema.statics.initializeUsers = async function() {
+//     const usersCount = await this.countDocuments();
+//     if (usersCount === 0) {
+//         const saltRounds = 10;
 
-        const users = [
-            {
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'aymarbly559@gmail.com',
-                phone: '0102030405',
-                password: await bcrypt.hash('1234', saltRounds),
-                address:"Abidjan"
-            },
-            {
-                firstName: 'Jane',
-                lastName: 'Smith',
-                email: 'jane.smith@example.com',
-                phone: '0607080910',
-                password: await bcrypt.hash('1234', saltRounds),
-                address:"Abidjan"
-            },
-            {
-                firstName: 'Alice',
-                lastName: 'Johnson',
-                email: 'alice.johnson@example.com',
-                phone: '0506070809',
-                password: await bcrypt.hash('1234', saltRounds),
-                address:"Abidjan"
-            }
-        ];
+//         const users = [
+//             {
+//                 firstName: 'John',
+//                 lastName: 'Doe',
+//                 email: 'aymarbly559@gmail.com',
+//                 phone: '0102030405',
+//                 password: await bcrypt.hash('1234', saltRounds),
+//                 address:"Abidjan"
+//             },
+//             {
+//                 firstName: 'Jane',
+//                 lastName: 'Smith',
+//                 email: 'jane.smith@example.com',
+//                 phone: '0607080910',
+//                 password: await bcrypt.hash('1234', saltRounds),
+//                 address:"Abidjan"
+//             },
+//             {
+//                 firstName: 'Alice',
+//                 lastName: 'Johnson',
+//                 email: 'alice.johnson@example.com',
+//                 phone: '0506070809',
+//                 password: await bcrypt.hash('1234', saltRounds),
+//                 address:"Abidjan"
+//             }
+//         ];
 
-        await this.insertMany(users);
-        console.log('Utilisateurs initialisés avec succès.');
-    } else {
-        console.log('Les utilisateurs existent déjà.');
-    }
-};
+//         await this.insertMany(users);
+//         console.log('Utilisateurs initialisés avec succès.');
+//     } else {
+//         console.log('Les utilisateurs existent déjà.');
+//     }
+// };
 
 const User = mongoose.model('User', userSchema);
 
