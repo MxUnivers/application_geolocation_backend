@@ -6,12 +6,15 @@ const transactionSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: false
     },
     station: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Station',
         required: false
+    },
+    address :{
+        type:String
     },
     kilowattConsumed: {
         type: Number,
@@ -19,7 +22,7 @@ const transactionSchema = new Schema({
     },
     batteryPercentage: {
         type: Number,
-        required: true
+        required: false
     },
     transactionDate: {
         type: Date,
@@ -27,7 +30,7 @@ const transactionSchema = new Schema({
     },
     pricePerMinute: {
         type: Number,
-        required: true
+        required: false
     },
     timeSpent: {
         type: Number,

@@ -12,11 +12,11 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    email: {
-        type: String,
-        unique: true,
-        sparse: true // Permet d'accepter des valeurs nulles
-    },
+    // email: {
+    //     type: String,
+    //     unique: true,
+    //     sparse: true // Permet d'accepter des valeurs nulles
+    // },
     profilePicture: {
         type: String,
         required: false,

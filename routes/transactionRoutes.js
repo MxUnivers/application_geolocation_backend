@@ -6,21 +6,16 @@ const Transaction = require('../models/TransactionModel');
 // Créer une transaction
 router.post('/register', async (req, res) => {
     try {
-        const { user, station, kilowattConsumed, batteryPercentage, pricePerMinute, timeSpent } = req.body;
+        const { user, station, kilowattConsumed,address, batteryPercentage, timeSpent } = req.body;
         
-        // Validation pour s'assurer que user et station sont présents
-        if (!user || !station) {
-            return res.status(400).json({ message: 'User ID and Station ID are required' });
-        }
+        
         // Calculer le coût total de la transaction
-        const totalCost = kilowattConsumed * pricePerMinute * (timeSpent / 60);
+        const totalCost = kilowattConsumed * 100  ;
         
         const newTransaction = new Transaction({
             user,
-            station,
             kilowattConsumed,
-            batteryPercentage,
-            pricePerMinute,
+            address,
             timeSpent,
             totalCost
         });
@@ -41,6 +36,22 @@ router.get('/get_transactions', async (req, res) => {
         if (stationId) filter.station = stationId;
 
         const transactions = await Transaction.find(filter).populate('user').populate('station');
+        return res.status(200).json({ data: transactions, message: "Transactions retrieved successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+});
+
+
+// Obtenir toutes les transactions
+router.get('/get_transactions/user', async (req, res) => {
+    try {
+        const { userId } = req.query;
+        let filter = {};
+        if (userId) filter.user = userId;
+        // if (stationId) filter.station = stationId;
+
+        const transactions = await Transaction.find(filter).populate('user')
         return res.status(200).json({ data: transactions, message: "Transactions retrieved successfully" });
     } catch (error) {
         return res.status(500).json({ message: error.message });

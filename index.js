@@ -42,14 +42,14 @@ const stationRoutes = require('./routes/stationRoutes');
 const tripRoutes = require('./routes/trajetRoutes');;
 
 // Route de test pour vérifier que le serveur fonctionne
-app.get("/", authenticateToken, (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "API Artisan web availability" });
 });
 
 // Utilisation des routes
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/transaction', transactionRoutes);
+app.use('/api/v1/transactions', transactionRoutes);
 app.use('/api/v1/station', stationRoutes);
 app.use('/api/v1/trajet', tripRoutes);
 
