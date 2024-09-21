@@ -21,9 +21,9 @@ router.post('/register', async (req, res) => {
         });
 
         await newTransaction.save();
-        return res.status(201).json({ data: newTransaction, message: "Transaction saved successfully" });
+        return res.status(200).json({ data: newTransaction, message: "Transaction saved successfully" });
     } catch (error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
     }
 });
 
