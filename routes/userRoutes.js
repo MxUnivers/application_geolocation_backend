@@ -23,25 +23,25 @@ function generateRandomPasswordE(length) {
 // Créer un utilisateur
 router.post('/register', async (req, res) => {
     try {
-        const { phone} = req.body;
+        const { phone,password} = req.body;
         const userExist = await User.findOne({ $or: [{ phone: phone }] });
         if (userExist) {
             return res.status(410).json({ message: `Cet utilisateur existe déjà avec ${phone} ou ${email}` });
         }
-        const passwordRandom = generateRandomPasswordE(4);
-        const hashedPassword = await bcrypt.hash(passwordRandom, 10);
+        // const passwordRandom = generateRandomPasswordE(4);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User(req.body);
         newUser.password = hashedPassword;
         await newUser.save();
 
-        sendEmail(
-            "aymarbly559@gmail.com",
-            "a g c t x y x c o x s k v a g k",
-            `${newUser.email}`,
-            `${ApplicationInfo.name}`,
-            `Votre mot de passe : ${passwordRandom}`
-        );
+        // sendEmail(
+        //     "aymarbly559@gmail.com",
+        //     "a g c t x y x c o x s k v a g k",
+        //     `${newUser.email}`,
+        //     `${ApplicationInfo.name}`,
+        //     `Votre mot de passe : ${passwordRandom}`
+        // );
 
         return res.status(200).json({ data: newUser, message: "Inscription réussie avec succès" });
     } catch (error) {

@@ -43,11 +43,11 @@ router.get('/get_transactions', async (req, res) => {
         const transactions = await Transaction.find({});
         const phoneNumber = '0595387052';
         // Vérifie si le numéro est valide avant d'envoyer le SMS
-        if (isVerifiedNumber(phoneNumber)) {
-            envoyerSMS("Salut", phoneNumber);
-        } else {
-            console.log(`Le numéro ${phoneNumber} n'est pas vérifié.`);
-        }
+        // if (isVerifiedNumber(phoneNumber)) {
+        //     envoyerSMS("Salut", phoneNumber);
+        // } else {
+        //     console.log(`Le numéro ${phoneNumber} n'est pas vérifié.`);
+        // }
 
         return res.status(200).json({ data: transactions.reverse(), message: "Transactions retrieved successfully" });
     } catch (error) {
