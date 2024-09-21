@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Transaction = require('../models/TransactionModel');
-// const { envoyerSMS } = require('../utils/sendSms');
 
 // Créer une transaction
 // Créer une transaction
