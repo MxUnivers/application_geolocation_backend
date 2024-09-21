@@ -13,11 +13,11 @@ const userSchema = new Schema({
         required: false
     },
     codePostal :{type:String},
-    // email: {
-    //     type: String,
-    //     unique: true,
-    //     sparse: true // Permet d'accepter des valeurs nulles
-    // },
+    email: {
+        type: String,
+        unique: true,
+        sparse: true // Permet d'accepter des valeurs nulles
+    },
     profilePicture: {
         type: String,
         required: false,
@@ -26,7 +26,6 @@ const userSchema = new Schema({
     phone: {
         type: String,
         unique: false,
-        sparse: true, // Permet d'accepter des valeurs nulles
         required:true
     },
     address: {
@@ -44,7 +43,7 @@ const userSchema = new Schema({
     },
     balance: {
         type: Number,
-        default: 15000
+        default: 0
     },
     isBlocked: {
         type: Boolean,
